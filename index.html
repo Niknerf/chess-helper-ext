@@ -4,18 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Chess Helper — Install for Firefox &amp; Zen Browser</title>
+    <title>Chess Helper v1.2.0 — Firefox &amp; Zen Browser</title>
     <link rel="icon" type="image/png" href="./icon.png" />
     <style>
       :root {
         color-scheme: dark;
-        --bg: #0f1115;
-        --card: #181b21;
-        --border: #2a2f3a;
+        --bg: #0b0d12;
+        --surface: #131720;
+        --surface-2: #191f2c;
+        --border: rgba(255, 255, 255, 0.08);
+        --border-strong: rgba(255, 255, 255, 0.14);
         --text: #f4f4f5;
         --muted: #a1a1aa;
+        --dim: #71717a;
         --accent: #22c55e;
         --accent-hover: #16a34a;
+        --accent-glow: rgba(34, 197, 94, 0.22);
       }
       * {
         box-sizing: border-box;
@@ -23,129 +27,355 @@
       body {
         margin: 0;
         min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        background: radial-gradient(circle at top, #17202a 0%, var(--bg) 55%);
+        padding: 40px 20px 56px;
+        background:
+          radial-gradient(900px 420px at 50% -10%, rgba(34, 197, 94, 0.14), transparent 65%),
+          radial-gradient(600px 360px at 85% 15%, rgba(59, 130, 246, 0.08), transparent 60%),
+          var(--bg);
         color: var(--text);
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        line-height: 1.5;
+        line-height: 1.55;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+        display: grid;
+        gap: 20px;
       }
       .card {
-        width: 100%;
-        max-width: 480px;
-        background: var(--card);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.005)), var(--surface);
         border: 1px solid var(--border);
-        border-radius: 16px;
+        border-radius: 18px;
         padding: 28px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
       }
-      .header {
+      .hero {
+        padding: 32px 28px;
+      }
+      .brand {
         display: flex;
         align-items: center;
-        gap: 14px;
-        margin-bottom: 16px;
+        gap: 16px;
+        margin-bottom: 18px;
       }
-      .header img {
-        width: 52px;
-        height: 52px;
-        border-radius: 12px;
+      .brand img {
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
       }
       h1 {
         margin: 0;
-        font-size: 1.35rem;
-        line-height: 1.2;
+        font-size: 1.65rem;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+      }
+      .badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
       }
       .badge {
-        display: inline-block;
-        margin-top: 4px;
-        padding: 2px 8px;
-        font-size: 0.75rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 3px 10px;
+        font-size: 0.76rem;
         font-weight: 600;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-strong);
+        color: var(--muted);
+      }
+      .badge-green {
         color: #86efac;
         background: rgba(34, 197, 94, 0.14);
-        border: 1px solid rgba(34, 197, 94, 0.35);
-        border-radius: 999px;
+        border-color: rgba(34, 197, 94, 0.35);
       }
-      .desc {
-        margin: 0 0 22px;
+      .lead {
+        margin: 0 0 24px;
         color: var(--muted);
-        font-size: 0.95rem;
+        font-size: 1rem;
+      }
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px;
       }
       .install-btn {
-        display: block;
-        width: 100%;
-        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        flex: 1 1 260px;
         text-decoration: none;
         background: var(--accent);
         color: #052e16;
         font-weight: 700;
-        font-size: 1rem;
-        padding: 13px 18px;
-        border-radius: 10px;
-        transition: background 0.15s ease, transform 0.1s ease;
+        font-size: 1.02rem;
+        padding: 14px 22px;
+        border-radius: 12px;
+        box-shadow: 0 10px 28px var(--accent-glow);
+        transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
       }
       .install-btn:hover {
         background: var(--accent-hover);
         color: #ffffff;
+        box-shadow: 0 12px 32px rgba(34, 197, 94, 0.32);
       }
       .install-btn:active {
-        transform: scale(0.99);
+        transform: translateY(1px);
+      }
+      .cta-meta {
+        font-size: 0.82rem;
+        color: var(--dim);
+      }
+      .pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+      }
+      .pill {
+        font-size: 0.78rem;
+        color: var(--muted);
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 5px 10px;
+      }
+      h2 {
+        margin: 0 0 14px;
+        font-size: 1.05rem;
+        letter-spacing: -0.01em;
       }
       .steps {
-        margin: 22px 0 0;
-        padding: 16px 18px;
-        background: rgba(255, 255, 255, 0.03);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 12px;
+      }
+      .steps li {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 12px;
+        align-items: start;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+      .step-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.82rem;
+        color: #86efac;
+        background: rgba(34, 197, 94, 0.12);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+      }
+      .steps strong,
+      .feature-card strong {
+        color: var(--text);
+      }
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 14px;
+      }
+      .feature-card {
+        background: var(--surface-2);
         border: 1px solid var(--border);
-        border-radius: 10px;
+        border-radius: 12px;
+        padding: 16px;
         font-size: 0.88rem;
         color: var(--muted);
       }
-      .steps strong {
+      .feature-card h3 {
+        margin: 0 0 8px;
+        font-size: 0.94rem;
         color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
-      .steps ol {
+      .feature-list {
+        list-style: none;
         margin: 8px 0 0;
-        padding-left: 18px;
+        padding: 0;
+        display: grid;
+        gap: 6px;
       }
-      .steps li + li {
-        margin-top: 6px;
+      .feature-list li {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
       }
-      .footnote {
-        margin: 16px 0 0;
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        transform: translateY(-1px);
+      }
+      .dot-green { background: #22c55e; }
+      .dot-red { background: #ef4444; }
+      .dot-blue { background: #3b82f6; }
+      .dot-orange { background: #f97316; }
+      .dot-amber { background: #eab308; }
+      .shortcuts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .shortcut {
+        flex: 1 1 240px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 0.86rem;
+        color: var(--muted);
+      }
+      kbd {
+        display: inline-block;
+        padding: 2px 7px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
         font-size: 0.78rem;
-        color: #71717a;
+        color: var(--text);
+        background: #0d1017;
+        border: 1px solid var(--border-strong);
+        border-bottom-width: 2px;
+        border-radius: 6px;
+      }
+      .footer {
+        text-align: center;
+        font-size: 0.8rem;
+        color: var(--dim);
+        padding: 4px 12px;
+      }
+      @media (max-width: 520px) {
+        .card, .hero {
+          padding: 22px 18px;
+        }
+        h1 {
+          font-size: 1.4rem;
+        }
       }
     </style>
   </head>
   <body>
-    <main class="card">
-      <div class="header">
-        <img src="./icon.png" alt="Chess Helper icon" />
-        <div>
-          <h1>Chess Helper</h1>
-          <span class="badge">v1.2.0 &middot; Firefox &amp; Zen Browser</span>
+    <main class="wrap">
+      <section class="card hero">
+        <div class="brand">
+          <img src="./icon.png" alt="Chess Helper icon" />
+          <div>
+            <h1>Chess Helper</h1>
+            <div class="badges">
+              <span class="badge badge-green">v1.2.0</span>
+              <span class="badge">Firefox &amp; Zen Browser</span>
+              <span class="badge">Mozilla Signed &middot; Auto-Updating</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <p class="desc">
-        Local Stockfish 19 WASM analysis overlay, evaluation bar, and Coach mode for
-        Chess.com and Lichess.org. Runs 100% in your browser and updates automatically.
-      </p>
-      <a class="install-btn" href="./releases/chess-helper-1.2.0.xpi">
-        Install Chess Helper (v1.2.0)
-      </a>
-      <section class="steps">
-        <strong>How to install (one time):</strong>
-        <ol>
-          <li>Open this page in <strong>Zen Browser</strong> or <strong>Firefox</strong> and click the button above.</li>
-          <li>Click <strong>Continue to Installation</strong> &rarr; <strong>Add</strong> in the browser prompt.</li>
-          <li>Pin Chess Helper to your toolbar. Future versions install automatically!</li>
+        <p class="lead">
+          Real-time <strong>Stockfish 19 WASM</strong> analysis overlay, side evaluation bar,
+          and customizable <strong>Coach</strong> learning tools for
+          <strong>Chess.com</strong> and <strong>Lichess.org</strong>.
+        </p>
+        <div class="cta-row">
+          <a class="install-btn" href="./releases/chess-helper-1.2.0.xpi">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Install Chess Helper (v1.2.0)
+          </a>
+          <span class="cta-meta">1-click install &middot; Firefox 142+ &amp; Zen Browser</span>
+        </div>
+        <div class="pills">
+          <span class="pill">100% Local Engine (No Servers)</span>
+          <span class="pill">Zero Data Collected</span>
+          <span class="pill">Windows &middot; macOS &middot; Linux</span>
+          <span class="pill">Silent Background Updates</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Quick Install (One Time)</h2>
+        <ol class="steps">
+          <li>
+            <span class="step-num">1</span>
+            <div>Open this page in <strong>Zen Browser</strong> or <strong>Firefox</strong> and click <strong>Install Chess Helper</strong> above.</div>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <div>When the browser prompt appears, click <strong>Continue to Installation</strong> &rarr; <strong>Add</strong>.</div>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <div>Pin <strong>Chess Helper</strong> to your toolbar, open a bot game or analysis board on <strong>Lichess</strong> or <strong>Chess.com</strong>, and switch it <strong>On</strong>.</div>
+          </li>
+          <li>
+            <span class="step-num">4</span>
+            <div><strong>Automatic updates:</strong> New versions install automatically in the background&mdash;no need to download anything again.</div>
+          </li>
         </ol>
       </section>
-      <p class="footnote">
-        Intended for bot games, puzzles, and post-game study. Please respect fair-play rules in live rated games.
-      </p>
+
+      <section class="card">
+        <h2>Modes &amp; Learning Tools</h2>
+        <div class="grid-2">
+          <div class="feature-card">
+            <h3><span class="dot dot-green"></span>Best Move Mode</h3>
+            <p style="margin:0;">
+              Clean, distraction-free mode showing Stockfish&rsquo;s single strongest move arrow on your turn, paired with an optional side <strong>Evaluation bar</strong> and adjustable depth (8&ndash;18).
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3><span class="dot dot-blue"></span>Coach Mode (Mix &amp; Match)</h3>
+            <ul class="feature-list">
+              <li><span class="dot dot-red"></span><span><strong>Opponent threat:</strong> Red dashed arrow showing their immediate threat.</span></li>
+              <li><span class="dot dot-green"></span><span><strong>Piece hint first:</strong> Highlights the piece to move without spoiling the square.</span></li>
+              <li><span class="dot dot-blue"></span><span><strong>Top 3 moves:</strong> Green, blue, and amber candidate arrows (MultiPV).</span></li>
+              <li><span class="dot dot-orange"></span><span><strong>Expected reply:</strong> Dotted orange arrow for the opponent&rsquo;s best answer.</span></li>
+              <li><span class="dot dot-amber"></span><span><strong>Move feedback:</strong> Instant Best / Good / Inaccuracy / Mistake / Blunder badge.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Keyboard Shortcuts</h2>
+        <div class="shortcuts">
+          <div class="shortcut">
+            <span>Toggle overlay on / off</span>
+            <span><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd></span>
+          </div>
+          <div class="shortcut">
+            <span>Reveal move in Piece Hint mode</span>
+            <span><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd></span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        Fair Play Notice: Chess Helper is a visual learning overlay (it never clicks or auto-moves pieces).
+        Use it against bots, on puzzles, or for study&mdash;not in rated live games against humans.
+      </footer>
     </main>
   </body>
 </html>
