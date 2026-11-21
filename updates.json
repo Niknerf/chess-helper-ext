@@ -1,0 +1,18 @@
+{
+  "addons": {
+    "chess-helper@niknerf.github.io": {
+      "updates": [
+        {
+          "version": "1.2.0",
+          "update_link": "https://niknerf.github.io/chess-helper-ext/releases/chess-helper-1.2.0.xpi",
+          "update_hash": "sha256:97db6724de0eb2e2af2ad54b50a510d82f15a49769115527a975ace639d44ee4",
+          "applications": {
+            "gecko": {
+              "strict_min_version": "142.0"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
